@@ -1,0 +1,29 @@
+[Unit]
+Description=home-mcp – MCP-Server für Gmail und Google Kalender
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=homemcp
+Group=homemcp
+Environment=HOME_MCP_HOME=/srv/home-mcp
+Environment=HOME_MCP_PORT=8790
+Environment=HOME_MCP_PUBLIC=https://<pi>.<tailnet>.ts.net
+ExecStart=/usr/bin/python3 /opt/home-mcp/home_mcp.py
+Restart=always
+RestartSec=5
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/srv/home-mcp
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryMax=200M
+
+[Install]
+WantedBy=multi-user.target
