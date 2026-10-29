@@ -68,3 +68,24 @@ Recht: `slack`. home-mcp ruft ausschließlich lesende API-Methoden auf.
 **Feinere Grenzen (0.6.1):** Pro Nutzer und Konto „nur Hauptkalender“ (keine abonnierten/fremden Kalender) und eine
 **Slack-Kanal-Whitelist** (Auswahlliste mit Suchfeld). Ohne Whitelist sehen Menschen alle Kanäle, Bots keinen.
 `slack_fuer_mich` liefert immer Direktnachrichten an dich, Erwähnungen und eigene Nachrichten – mit Thread bzw. den Nachrichten davor.
+
+## Google Drive, Docs, Sheets (ab 0.8.0) – Ordner und Uploads (ab 0.10.0)
+
+Recht `drive:<adresse>`. Google-Bereiche: `drive.readonly` (finden, lesen), `drive.file` (eigene Dateien und Ordner anlegen,
+hochladen), `spreadsheets`, `documents`. Löschen, Teilen und Verschieben gibt es nicht.
+
+- Lesen: `drive_suche`, `drive_lesen`, `sheets_lesen`. Schreiben: `sheets_schreiben`, `sheets_anhaengen`, `sheet_anlegen`, `doc_anlegen`, `doc_anhaengen`.
+- **Ordner und Dateien (0.10.0):** `drive_ordner_anlegen(name, eltern?)`, `drive_hochladen(name, base64|inhalt, ordner?, mime?, als_google?)`,
+  `doc_anlegen`/`sheet_anlegen` mit `ordner`. `als_google` wandelt Word/Excel/PowerPoint/CSV in Google-Formate um.
+- **Ordner-Paket:** `drive_ordner_paket(name, eltern?, dateien: [{name, art: doc|sheet|datei, text | zeilen | base64 | inhalt, unterordner?}])`
+  legt einen Ordner mit allem darin an – bei Bots mit **einer** Freigabe; die Karte zeigt Ordnername und Liste der Dateien.
+  Fehler einzelner Dateien halten den Rest nicht auf.
+- Grenzen: 20 MB je Datei, 25 MB Uploads je Freigabe, 100 Einträge je Paket, 5 Ebenen Unterordner. Anfragen an `/mcp` bis 40 MB.
+- Wegen `drive.file` geht `eltern`/`ordner` nur für Ordner, die home-mcp selbst angelegt hat (oder „Meine Ablage“) – fremde Ordner lehnt Google ab.
+  Eine neue Google-Anmeldung ist dafür **nicht** nötig.
+- Bei Bots landen die Bytes bis zur Entscheidung in `<HOME>/ablage/<sha256>` (600, höchstens 300 MB), nicht in `freigaben.json`;
+  danach werden sie gelöscht.
+- **Zurücknehmen** einer ausgeführten Freigabe (`drive_*`, `doc_anlegen`, `sheet_anlegen`) verschiebt das Angelegte in den Drive-Papierkorb –
+  beim Paket den ganzen Ordner.
+
+Tests (gemockte Google-API, legen nichts an): `python3 -m unittest discover -s tests`
