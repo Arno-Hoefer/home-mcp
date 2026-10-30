@@ -4,7 +4,7 @@ Für jemanden, der **auf einem eigenen, leeren Server** home-mcp und danach Nook
 ohne etwas von einer bestehenden Installation zu übernehmen.
 
 **Reihenfolge: erst home-mcp (diese Datei), dann NookBot** (`docs/neuer-server.md` im Repo
-[nookbot](https://github.com/Arno-Hoefer/nookbot)). NookBot braucht beim Einrichten einen Bot-Schlüssel aus home-mcp und
+**nookbot**). NookBot braucht beim Einrichten einen Bot-Schlüssel aus home-mcp und
 läuft ohne home-mcp nur ohne Mail, Kalender, Drive und Freigaben.
 
 Platzhalter: `server` = SSH-Alias des neuen Servers auf deinem Rechner, `<name>.<tailnet>.ts.net` = sein Tailscale-Name.
