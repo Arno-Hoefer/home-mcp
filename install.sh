@@ -9,7 +9,12 @@ id homemcp >/dev/null 2>&1 || useradd --system --no-create-home --shell /usr/sbi
 install -d -o homemcp -g homemcp -m 700 /srv/home-mcp /srv/home-mcp/konten
 install -d -m 755 /opt/home-mcp
 install -m 644 home_mcp.py nutzer.py freigaben.py verwaltung.py einrichten.py /opt/home-mcp/
-install -m 644 home-mcp.service /etc/systemd/system/home-mcp.service
+# HOME_MCP_PUBLIC = Tailscale-Name dieses Rechners – muss genau der Funnel-Adresse entsprechen, darum nicht von Hand
+NAME=$(tailscale status --json 2>/dev/null | python3 -c 'import json,sys; print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || true)
+case "$NAME" in *.ts.net) ;; *) echo "Tailscale ist nicht angemeldet oder MagicDNS ist aus – zuerst: sudo tailscale up"; exit 1 ;; esac
+sed "s|^Environment=HOME_MCP_PUBLIC=.*|Environment=HOME_MCP_PUBLIC=https://$NAME|" home-mcp.service > /etc/systemd/system/home-mcp.service
+chmod 644 /etc/systemd/system/home-mcp.service
+echo "Öffentliche Adresse: https://$NAME"
 if [ -f /tmp/home-mcp-client.json ]; then
   install -o homemcp -g homemcp -m 600 /tmp/home-mcp-client.json /srv/home-mcp/client.json && shred -u /tmp/home-mcp-client.json
 fi

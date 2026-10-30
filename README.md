@@ -10,6 +10,7 @@ Nur Python-Standardbibliothek. Mails werden nie gesendet – es gibt nur Entwür
 
 Installieren: Dateien nach `/tmp` auf den Pi, `sudo bash /tmp/install.sh`. **Von Null aufsetzen oder aus der Sicherung
 wiederherstellen:** Schritt für Schritt mit Prüfbefehlen in [NEU-AUFSETZEN.md](NEU-AUFSETZEN.md).
+**Neuer, eigener Server mit home-mcp und NookBot:** zuerst [NEUER-SERVER.md](NEUER-SERVER.md), danach `docs/neuer-server.md` im Repo nookbot.
 Einrichten (interaktiv, auf dem Pi): `sudo -u homemcp python3 /opt/home-mcp/einrichten.py passwort|konto <adresse> [--kalender]`.
 Geheimnisse (nie im Git): `/srv/home-mcp/{token,passwort,client.json,oauth.json,konten/*.json}`.
 
