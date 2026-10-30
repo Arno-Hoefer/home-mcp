@@ -8,7 +8,8 @@ Nur Python-Standardbibliothek. Mails werden nie gesendet – es gibt nur Entwür
 - Claude Cowork / App / claude.ai: dieselbe Adresse als **Custom Connector** (OAuth mit eigenem Passwort).
   Dafür ist genau dieser Dienst per Tailscale Funnel öffentlich; alle anderen Dienste bleiben nur im Tailnet.
 
-Installieren: Dateien nach `/tmp` auf den Pi, `sudo bash /tmp/install.sh`.
+Installieren: Dateien nach `/tmp` auf den Pi, `sudo bash /tmp/install.sh`. **Von Null aufsetzen oder aus der Sicherung
+wiederherstellen:** Schritt für Schritt mit Prüfbefehlen in [NEU-AUFSETZEN.md](NEU-AUFSETZEN.md).
 Einrichten (interaktiv, auf dem Pi): `sudo -u homemcp python3 /opt/home-mcp/einrichten.py passwort|konto <adresse> [--kalender]`.
 Geheimnisse (nie im Git): `/srv/home-mcp/{token,passwort,client.json,oauth.json,konten/*.json}`.
 
@@ -37,6 +38,7 @@ Werkzeuge `gitlab_projekte`, `gitlab_issues`, `gitlab_issue`, `gitlab_mrs`, `git
 - Zugänge (OAuth) gehören fest zu einem Nutzer. Sperren, Löschen, Passwortwechsel und „Überall abmelden“ machen sie sofort ungültig.
 - Migration beim ersten Start: altes `passwort` → Nutzer `admin` (Admin, alle Rechte), alte Zugänge gelten als admin, `datenbank.json` → `datenbanken/heroku.json`.
 - **Verwaltungsseite** (`verwaltung.py`) im selben Dienst, NUR auf `127.0.0.1:8791` – nicht über Tailscale/Funnel. Vom Mac:
+  `./verwaltung-oeffnen.sh [ssh-host]` (Tunnel im Hintergrund + Browser; Standard-Host `raspi`) – oder von Hand
   `ssh -L 8791:127.0.0.1:8791 raspi` und dann http://127.0.0.1:8791 (nicht „localhost“ – Google leitet auf 127.0.0.1 zurück).
   Nutzer anlegen/sperren/löschen, Rechte anhaken, Google-Konten mit geführter Anmeldung, Datenbanken, GitLab, Protokoll.
   Admin-Anmeldung, Sitzungen 8 h, CSRF-Token, Host- und Origin-Prüfung.

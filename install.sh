@@ -3,7 +3,8 @@
 # Schlüssel für Claude Code (Tailnet) anzeigen: sudo cat /srv/home-mcp/token
 set -euo pipefail
 cd "$(dirname "$0")"
-command -v psql >/dev/null || apt-get install -y postgresql-client
+command -v psql >/dev/null || { apt-get update -qq && apt-get install -y postgresql-client; }
+command -v curl >/dev/null || apt-get install -y curl
 id homemcp >/dev/null 2>&1 || useradd --system --no-create-home --shell /usr/sbin/nologin homemcp
 install -d -o homemcp -g homemcp -m 700 /srv/home-mcp /srv/home-mcp/konten
 install -d -m 755 /opt/home-mcp

@@ -1,8 +1,9 @@
 """
 Verwaltungsseite von home-mcp – Nutzer, Bots + Schlüssel, Freigaben, Rechte, Google-Konten, Datenbanken, GitLab, Slack, Protokoll.
 
-Lauscht NUR auf 127.0.0.1:8791 (kein Tailscale, kein Funnel). Vom Mac aus per SSH-Tunnel:
-    ssh -L 8791:127.0.0.1:8791 raspi      → im Browser http://127.0.0.1:8791
+Lauscht NUR auf 127.0.0.1:8791 (kein Tailscale, kein Funnel), als Thread im home-mcp-Dienst. Vom Mac aus per SSH-Tunnel:
+    ./verwaltung-oeffnen.sh [ssh-host]     (baut den Tunnel im Hintergrund auf und öffnet den Browser; Standard raspi)
+    ssh -L 8791:127.0.0.1:8791 raspi      → im Browser http://127.0.0.1:8791   (dasselbe von Hand)
 Anmeldung mit Name + Passwort eines Admins. Jede Änderung hat ein CSRF-Token, Host/Origin werden geprüft.
 Google-Anmeldung läuft über die Desktop-App-Weiterleitung auf http://127.0.0.1:8791/ – darum die Seite immer über 127.0.0.1 öffnen.
 """
